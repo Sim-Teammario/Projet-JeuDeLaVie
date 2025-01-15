@@ -6,6 +6,13 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
+#include <fstream>
+
+#ifdef _WIN32
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#endif
 
 // Classe pour l'interface utilisateur
 class UI {
@@ -31,6 +38,9 @@ public:
     // Méthode pour faire une pause entre deux itérations
     void pause(int duration);
 
+    // Méthode pour gérer les événements de clavier
+    void handleKeyboardEvent(const sf::Event& event, Game& game, const std::string& output_folder);
+
 private:
     sf::RenderWindow window_;
     const int cellSize_ = 10;
@@ -38,6 +48,7 @@ private:
     int windowHeight_ = 0;
     int windowWidth_ = 0;
     bool consoleMode_;
+    bool saveOnClose_;
 };
 
 // Implémentation des méthodes de la classe UI
@@ -57,8 +68,10 @@ void UI::run(Game& game, std::string output_folder) {
         sf::Event event;
         while (window_.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
+                saveState(game.getGrid(), game.getCurrentIteration(), output_folder);
                 window_.close();
             }
+            handleKeyboardEvent(event, game, output_folder);
         }
 
         auto currentTime = std::chrono::high_resolution_clock::now();
@@ -68,8 +81,7 @@ void UI::run(Game& game, std::string output_folder) {
             lastTime = currentTime;
             iteration++;
 
-            std::cout << "Sauvegarde de l'état du jeu à l'itération " << iteration << std::endl;
-            saveState(game.getGrid(), iteration, output_folder);
+            std::cout << "Itération " << iteration << std::endl;
             printGridToConsole(game.getGrid());
         }
 
@@ -87,9 +99,6 @@ void UI::run(Game& game, std::string output_folder) {
     }
 }
 
-
-
-
 void UI::drawGrid(const Grid& grid, sf::RenderWindow& window) const {
     int gridWidth = grid.getCols() * cellSize_;
     int gridHeight = grid.getRows() * cellSize_;
@@ -106,8 +115,14 @@ void UI::drawGrid(const Grid& grid, sf::RenderWindow& window) const {
     }
 }
 
-
 void UI::saveState(const Grid& grid, int iteration, const std::string& output_folder) {
+    // Créer le dossier de sortie s'il n'existe pas
+#ifdef _WIN32
+    _mkdir(output_folder.c_str());
+#else
+    mkdir(output_folder.c_str(), 0777);
+#endif
+
     std::string filename = output_folder + "/iteration_" + std::to_string(iteration) + ".txt";
     std::ofstream file(filename);
     if (file.is_open()) {
@@ -119,6 +134,7 @@ void UI::saveState(const Grid& grid, int iteration, const std::string& output_fo
             file << std::endl;
         }
         file.close();
+        std::cout << "État de la grille écrit avec succès dans le fichier : " << filename << std::endl;
     }
     else {
         std::cerr << "Erreur lors de l'ouverture du fichier : " << filename << std::endl;
@@ -136,4 +152,13 @@ void UI::printGridToConsole(const Grid& grid) const {
 
 void UI::pause(int duration) {
     std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+}
+
+void UI::handleKeyboardEvent(const sf::Event& event, Game& game, const std::string& output_folder) {
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.control && event.key.code == sf::Keyboard::S) {
+            std::cout << "Sauvegarde de l'état du jeu à l'itération " << game.getCurrentIteration() << std::endl;
+            saveState(game.getGrid(), game.getCurrentIteration(), output_folder);
+        }
+    }
 }

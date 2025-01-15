@@ -25,6 +25,8 @@ public:
     // Méthode pour récupérer la grille
     Grid getGrid() const;
 
+    int getCurrentIteration() const;
+
 private:
     Grid grid_; // Grille du jeu
     File file_;
@@ -86,4 +88,8 @@ Grid Game::getGrid() const {
 
 void Game::updateGrid() {
     grid_.updateGrid();
+}
+
+int Game::getCurrentIteration() const {
+    return currentIteration_;
 }
