@@ -53,10 +53,11 @@ private:
 
 // Implémentation des méthodes de la classe UI
 
-UI::UI() : window_(sf::VideoMode(800, 600), "Jeu de la Vie"), consoleMode_(false) {
+UI::UI() : window_(sf::VideoMode(800, 600), "Jeu de la Vie"), consoleMode_(false), saveOnClose_(false) {
     windowHeight_ = window_.getSize().y;
     windowWidth_ = window_.getSize().x;
 }
+
 
 UI::~UI() {}
 
@@ -117,12 +118,6 @@ void UI::drawGrid(const Grid& grid, sf::RenderWindow& window) const {
 
 void UI::saveState(const Grid& grid, int iteration, const std::string& output_folder) {
     // Créer le dossier de sortie s'il n'existe pas
-#ifdef _WIN32
-    _mkdir(output_folder.c_str());
-#else
-    mkdir(output_folder.c_str(), 0777);
-#endif
-
     std::string filename = output_folder + "/iteration_" + std::to_string(iteration) + ".txt";
     std::ofstream file(filename);
     if (file.is_open()) {
@@ -140,6 +135,7 @@ void UI::saveState(const Grid& grid, int iteration, const std::string& output_fo
         std::cerr << "Erreur lors de l'ouverture du fichier : " << filename << std::endl;
     }
 }
+
 
 void UI::printGridToConsole(const Grid& grid) const {
     for (int i = 0; i < grid.getRows(); ++i) {
