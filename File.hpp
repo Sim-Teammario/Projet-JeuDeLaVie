@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <fstream>
+#include <fstream> // Pour la lecture et l'écriture de fichiers
 #include <string>
 #include <vector>
 
@@ -15,7 +15,7 @@ public:
 
     // Méthode pour lire le fichier et extraire les données
     bool readFile(const std::string& filePath, int& rows, int& cols, std::vector<std::vector<bool>>& cells) {
-        std::ifstream file(filePath);
+        std::ifstream file(filePath); 
         if (!file.is_open()) {
             std::cerr << "Erreur lors de l'ouverture du fichier : " << filePath << std::endl;
             return false;
