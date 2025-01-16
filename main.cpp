@@ -9,8 +9,8 @@
 #include "UI.hpp"
 
 int main() {
-    std::string filePath = "C:\\Users\\simon\\source\\repos\\Projet-JeuDeLaVie\\Grid3.txt"; // Chemin du fichier de base
-    Game game;
+    std::string filePath = "C:\\Users\\simon\\source\\repos\\Projet-JeuDeLaVie\\Grid4.txt"; // Chemin du fichier de base
+    Game game; 
     UI ui;
 
     std::cout << "Chargement du fichier de grille..." << std::endl;
