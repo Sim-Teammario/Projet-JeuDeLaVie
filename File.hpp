@@ -33,7 +33,7 @@ public:
         }
 
         file.close();
-        std::cout << "Fichier de grille lu avec succès : " << rows << " lignes, " << cols << " colonnes." << std::endl;
+        std::cout << "Fichier de grille lu avec succes : " << rows << " lignes, " << cols << " colonnes." << std::endl;
         return true;
     }
 
@@ -55,7 +55,7 @@ public:
         }
 
         file.close();
-        std::cout << "État de la grille écrit avec succès dans le fichier : " << filePath << std::endl;
+        std::cout << "Etat de la grille ecrit avec succes dans le fichier : " << filePath << std::endl;
         return true;
     }
 };

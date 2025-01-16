@@ -15,14 +15,14 @@ int main() {
 
     std::cout << "Chargement du fichier de grille..." << std::endl;
     game.run(filePath); 
-    std::cout << "Fichier de grille chargé." << std::endl;
+    std::cout << "Fichier de grille charge." << std::endl;
 
     std::cout << "Affichage de la grille dans la console :" << std::endl;
     ui.printGridToConsole(game.getGrid());
 
     std::cout << "Lancement de l'interface utilisateur..." << std::endl;
     ui.run(game, "output");
-    std::cout << "Interface utilisateur lancée." << std::endl;
+    std::cout << "Interface utilisateur lancee." << std::endl;
 
     return 0;
 }

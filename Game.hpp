@@ -54,7 +54,7 @@ void Game::run(const std::string& filePath, int iterations) {
         std::cerr << "Erreur lors de la lecture du fichier." << std::endl;
         return;
     }
-    std::cout << "Fichier de grille lu avec succès : " << rows << " lignes, " << cols << " colonnes." << std::endl;
+    std::cout << "Fichier de grille lu avec succes : " << rows << " lignes, " << cols << " colonnes." << std::endl;
 
     grid_ = Grid(rows, cols);
     for (int i = 0; i < rows; ++i) {
@@ -76,7 +76,7 @@ void Game::iterate() {
         return;
     }
 
-    std::cout << "Itération " << currentIteration_ << std::endl;
+    std::cout << "Iteration " << currentIteration_ << std::endl;
     updateGrid();
     ++currentIteration_;
 }

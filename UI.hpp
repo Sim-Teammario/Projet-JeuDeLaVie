@@ -82,7 +82,7 @@ void UI::run(Game& game, std::string output_folder) {
             lastTime = currentTime;
             iteration++;
 
-            std::cout << "Itération " << iteration << std::endl;
+            std::cout << "Iteration " << iteration << std::endl;
             printGridToConsole(game.getGrid());
         }
 
@@ -118,7 +118,7 @@ void UI::drawGrid(const Grid& grid, sf::RenderWindow& window) const {
 
 void UI::saveState(const Grid& grid, int iteration, const std::string& output_folder) {
     // Créer le dossier de sortie s'il n'existe pas
-    std::string filename = output_folder + "/iteration_" + std::to_string(iteration) + ".txt";
+    std::string filename = output_folder + "/iteration_" + std::to_string(iteration) + ".txt"; //le fichier aura le nom "iteration_X"
     std::ofstream file(filename);
     if (file.is_open()) {
         file << grid.getRows() << " " << grid.getCols() << std::endl;
@@ -129,7 +129,7 @@ void UI::saveState(const Grid& grid, int iteration, const std::string& output_fo
             file << std::endl;
         }
         file.close();
-        std::cout << "État de la grille écrit avec succès dans le fichier : " << filename << std::endl;
+        std::cout << "Etat de la grille ecrit avec succes dans le fichier : " << filename << std::endl;
     }
     else {
         std::cerr << "Erreur lors de l'ouverture du fichier : " << filename << std::endl;
@@ -153,7 +153,7 @@ void UI::pause(int duration) {
 void UI::handleKeyboardEvent(const sf::Event& event, Game& game, const std::string& output_folder) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.control && event.key.code == sf::Keyboard::S) {
-            std::cout << "Sauvegarde de l'état du jeu à l'itération " << game.getCurrentIteration() << std::endl;
+            std::cout << "Sauvegarde de l'etat du jeu a l'iteration " << game.getCurrentIteration() << std::endl;
             saveState(game.getGrid(), game.getCurrentIteration(), output_folder);
         }
     }

@@ -49,7 +49,7 @@ Grid::Grid() : rows_(0), cols_(0) {}
 
 // Constructeur de la grille avec les dimensions (lignes, colonnes)
 Grid::Grid(int rows, int cols)
-    : rows_(rows), cols_(cols), cells_(rows, std::vector<Cell>(cols)) {
+	: rows_(rows), cols_(cols), cells_(rows, std::vector<Cell>(cols)) { // Initialisation de la grille avec des cellules mortes
 }
 
 Grid::~Grid() {}
@@ -66,7 +66,7 @@ bool Grid::getCellState(int row, int col) const {
     return cells_[row][col].isAlive();
 }
 
-void Grid::setCellState(int row, int col, bool state) {
+void Grid::setCellState(int row, int col, bool state) { // Méthode pour modifier l'état d'une cellule à une position donnée
     cells_[row][col].setAlive(state);
 }
 
@@ -112,7 +112,7 @@ int Grid::countLivingNeighbors(int row, int col) const {
 void Grid::printGrid() const {
     for (int i = 0; i < rows_; ++i) {
         for (int j = 0; j < cols_; ++j) {
-            std::cout << (cells_[i][j].isAlive() ? 'O' : '.');
+			std::cout << (cells_[i][j].isAlive() ? 'O' : '.'); // Affichage de 'O' pour une cellule vivante et '.' pour une cellule morte
         }
         std::cout << std::endl;
     }
